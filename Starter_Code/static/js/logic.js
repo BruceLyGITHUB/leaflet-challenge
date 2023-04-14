@@ -2,7 +2,7 @@
 const url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson';
 
 // Add a tile layer.
-let streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+let street_map = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 });
 
@@ -10,11 +10,11 @@ let streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
 var myMap = L.map("map", {
     center: [37.09, -95.71],
     zoom: 5,
-    layers: [streets]
+    layers: [street_map]
 });
 
 let baseMaps = {
-    "streets": streets
+    "street map": street_map
 };
 
 let earthquake_data = new L.LayerGroup();
@@ -61,7 +61,6 @@ d3.json(url).then(function (data) {
     console.log(data);
     let features = data.features;
     console.log(features);
-
     let results = features.filter(id => id.id == "nc73872510");
     let first_result = results[0];
     console.log(first_result);
@@ -72,5 +71,8 @@ d3.json(url).then(function (data) {
     console.log(coordinates[0]);
     console.log(coordinates[1]);
     console.log(coordinates[2]);
-
+    let magnitude = first_result.properties.mag;
+    console.log(magnitude);
+    let depth = geometry.coordinates[2];
+    console.log(depth);
 });
